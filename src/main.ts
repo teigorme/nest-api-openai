@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{ logger: ['log', 'warn', 'error']});
   const globalPrefix = 'api';
 
   app.setGlobalPrefix(globalPrefix);
@@ -25,7 +25,13 @@ async function bootstrap() {
   const port = process.env.PORT || 3333;
 
   await app.listen(port, () => {
-    Logger.log('🚀Listening at http://localhost:' + port + '/' + globalPrefix);
+    Logger.log(
+      '\n🚀 Application is running!\n' +
+      `🌐 URL: http://localhost:${port}/${globalPrefix}\n` +
+      `📅 Started at: ${new Date().toLocaleString()}`,
+      'Bootstrap',
+    );
   });
 }
+
 bootstrap();
