@@ -12,7 +12,9 @@ async function bootstrap() {
 
   app.setGlobalPrefix(globalPrefix);
   app.use(helmet());
-  app.enableCors("*");
+  app.enableCors({
+    origin: '*',
+  });
   const config = new DocumentBuilder()
     .setTitle('API NestJS🐈')
     .setDescription('Docs gerada automaticatimente para a API')
