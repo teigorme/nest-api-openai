@@ -42,6 +42,7 @@ export class AuthController {
 
 
   @Post("/refresh-token")
+  @Public()
   @UsePipes(new ZodValidationBodyPipe(refreshToken))
   @ApiCreatedResponse({
     type: JwtTokens,
