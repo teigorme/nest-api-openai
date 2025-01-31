@@ -39,7 +39,7 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({ where: { email: body.email } })
     if (!user || !(await toVerifyPassword(body.password, user.password))) throw new UnauthorizedException()
 
-    const payload: Payload = { sub: user.id, role: user.role };
+    const payload: Payload = { sub: user.id };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
@@ -50,23 +50,23 @@ export class AuthService {
 
   async refreshToken(body: refreshToken): Promise<Tokens> {
     try {
-      const { role, sub }: Payload = await this.jwtService.verifyAsync(
+      const { sub }: Payload = await this.jwtService.verifyAsync(
         body.refreshToken,
         {
           secret: jwtConstantsRefreshToken.secret
         }
       )
       return {
-        access_token: await this.jwtService.signAsync({ role, sub }),
-        refresh_token: await this.jwtService.signAsync({ role, sub }, { expiresIn: "7d", secret: jwtConstantsRefreshToken.secret }),
+        access_token: await this.jwtService.signAsync({ sub }),
+        refresh_token: await this.jwtService.signAsync({ sub }, { expiresIn: "7d", secret: jwtConstantsRefreshToken.secret }),
       }
     } catch (error) {
-      console.log(error);
-
       throw new UnauthorizedException()
 
     }
   }
+
+
 
 
 }

@@ -5,7 +5,7 @@ import { jwtConstants } from './domain/auth/constants/constants';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './domain/auth/guards/auth.guard';
-import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { LoggerMiddleware } from './infra/middlewares/logger.middleware';
 
 @Module({
   imports: [
@@ -21,8 +21,10 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
     useClass: AuthGuard,
   }],
 })
-export class AppModule { configure(consumer: MiddlewareConsumer) {
-  consumer
-    .apply(LoggerMiddleware)
-    .forRoutes({path:"*", method: RequestMethod.ALL}); 
-}}
+export class AppModule {
+    configure(consumer: MiddlewareConsumer) {
+      consumer
+        .apply(LoggerMiddleware)
+        .forRoutes({ path: "*", method: RequestMethod.ALL });
+    }
+}
