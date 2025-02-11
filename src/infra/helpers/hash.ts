@@ -3,7 +3,6 @@ import * as bcrypt from 'bcrypt';
 export async function toHashPassword(password: string): Promise<string> {
     const saltOrRounds = Math.random();
     return await bcrypt.hash(password, saltOrRounds);
-
 }
 
 

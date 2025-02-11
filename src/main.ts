@@ -5,9 +5,8 @@ import { AppModule } from './app.module';
 import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 import helmet from 'helmet';
 
-
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { logger: ['log', 'warn', 'error'] });
+  const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
 
   app.setGlobalPrefix(globalPrefix);
@@ -15,8 +14,9 @@ async function bootstrap() {
   app.enableCors({
     origin: '*',
   });
+  
   const config = new DocumentBuilder()
-    .setTitle('API NestJS🐈')
+    .setTitle('API NestJS😺')
     .setDescription('Docs gerada automaticatimente para a API')
     .setVersion('1.0.0')
     .build();
@@ -27,13 +27,13 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
-  const port = process.env.PORT || 3333;
+  const port = Number(process.env.PORT) || 3333;
 
   await app.listen(port, () => {
     Logger.log(
       '\n🚀 Application is running!\n' +
-      `🌐 URL: http://localhost:${port}/${globalPrefix}\n` +
-      `📅 Started at: ${new Date().toLocaleString()}`,
+        `🌐 URL: http://localhost:${port}/${globalPrefix}\n` +
+        `📅 Started at: ${new Date().toLocaleString()}`,
       'Bootstrap',
     );
   });
