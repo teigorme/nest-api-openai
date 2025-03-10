@@ -1,11 +1,11 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
-import { AuthModule } from './domain/authentication/auth.module';
+import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './domain/authentication/constants/constants';
+import { jwtConstants } from './auth/constants/constants';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './domain/authentication/guards/auth.guard';
-import { LoggerMiddleware } from './infra/middlewares/logger.middleware';
+import { AuthGuard } from './auth/guards/auth.guard';
+import { LoggerMiddleware } from './utils/middlewares/logger.middleware';
 
 @Module({
   imports: [
