@@ -60,7 +60,25 @@ export class AuthController {
   @UsePipes(new ZodValidationPipe(RefreshTokenZDto))
   async refreshToken(
     @Body() refreshTokenDto: RefreshTokenDto,
+    @Res({ passthrough: true }) response: Response,
   ): Promise<JwtTokens> {
-    return this.authService.refreshToken(refreshTokenDto);
+    const { access_token, refresh_token } = await
+      this.authService.refreshToken(refreshTokenDto);
+
+    response.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 15 * 60 * 1000,
+    });
+
+    response.cookie('refresh_token', refresh_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return { access_token, refresh_token };
   }
 }
