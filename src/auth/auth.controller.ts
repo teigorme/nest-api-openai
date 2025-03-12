@@ -5,7 +5,7 @@ import { LoginUserDto, LoginUserZDto } from './dto/login-auth.dto';
 import { RefreshTokenDto, RefreshTokenZDto } from './dto/refresh-token.dto';
 import { ZodValidationPipe } from 'src/utils/pipes/ZodValidationPipe';
 import { Public } from './decorators/public.decorator';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiResponse } from '@nestjs/swagger';
 import { ObjectNull } from 'src/utils/schemas/object-null';
 import { HttpError } from 'src/utils/schemas/http-error';
 import { JwtTokens } from './entities/jwt-tokens';
@@ -81,4 +81,6 @@ export class AuthController {
 
     return { access_token, refresh_token };
   }
+
+  
 }
